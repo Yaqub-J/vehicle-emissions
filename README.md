@@ -127,11 +127,70 @@ src/
 ## Deployment
 
 ### Vercel Deployment (Recommended)
-1. Push code to GitHub repository
-2. Connect repository to Vercel
-3. Deploy with default settings
-4. Add environment variables if needed:
-   - `NEXT_PUBLIC_BASE_URL` - Your domain URL
+
+This project is optimized for deployment on Vercel. Follow these steps:
+
+1. **Prepare for deployment**
+   ```bash
+   # Ensure your project builds successfully
+   npm run build
+   ```
+
+2. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   ```
+
+3. **Deploy on Vercel**
+   - Go to [vercel.com](https://vercel.com)
+   - Sign in with your GitHub account
+   - Click "New Project"
+   - Import your repository
+   - Vercel will auto-detect it's a Next.js app
+   - Click "Deploy"
+
+4. **Configure Environment Variables** (Optional)
+   After deployment, in your Vercel dashboard:
+   - Go to your project settings
+   - Add environment variables:
+     - `NEXT_PUBLIC_BASE_URL`: Your production URL (e.g., `https://your-app.vercel.app`)
+
+5. **Database Considerations**
+   - The SQLite database will be recreated on each deployment (Vercel is stateless)
+   - For production, consider upgrading to a persistent database like:
+     - Vercel Postgres
+     - PlanetScale
+     - Supabase
+
+### Alternative Deployment Options
+
+#### Railway
+1. Connect your GitHub repository
+2. Deploy with zero configuration
+3. Set environment variables in Railway dashboard
+
+#### DigitalOcean App Platform
+1. Create new app from GitHub
+2. Select Node.js environment
+3. Use build command: `npm run build`
+4. Use run command: `npm start`
+
+### Environment Variables Template
+Copy `.env.example` to `.env.local` for local development:
+```bash
+cp .env.example .env.local
+```
+
+### Production Checklist
+- [ ] Project builds successfully (`npm run build`)
+- [ ] All TypeScript errors resolved
+- [ ] ESLint warnings addressed
+- [ ] Environment variables configured
+- [ ] Database persistence plan (if needed)
+- [ ] SSL certificate enabled
+- [ ] Domain configured (optional)
 
 ### Manual Deployment
 1. **Build the application**
