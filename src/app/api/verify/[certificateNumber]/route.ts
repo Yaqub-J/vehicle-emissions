@@ -3,10 +3,10 @@ import { getCertificateData } from '@/lib/database';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { certificateNumber: string } }
+  { params }: { params: Promise<{ certificateNumber: string }> }
 ) {
   try {
-    const { certificateNumber } = params;
+    const { certificateNumber } = await params;
     
     if (!certificateNumber) {
       return NextResponse.json(

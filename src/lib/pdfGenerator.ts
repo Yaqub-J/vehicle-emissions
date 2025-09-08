@@ -174,7 +174,7 @@ export const generateCertificatePDF = (data: CertificateData): jsPDF => {
   return doc;
 };
 
-export const generatePDFBuffer = (data: CertificateData): Uint8Array => {
+export const generatePDFBuffer = (data: CertificateData): ArrayBuffer => {
   const doc = generateCertificatePDF(data);
   return doc.output('arraybuffer');
 };

@@ -4,10 +4,10 @@ import { generatePDFBuffer } from '@/lib/pdfGenerator';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const testId = params.id;
+    const { id: testId } = await params;
     
     if (!testId) {
       return NextResponse.json(
@@ -30,7 +30,7 @@ export async function GET(
     const pdfBuffer = generatePDFBuffer(certificateData);
     
     // Create response with PDF
-    const response = new NextResponse(pdfBuffer, {
+    const response = new NextResponse(Buffer.from(pdfBuffer), {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',

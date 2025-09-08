@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
@@ -32,13 +32,7 @@ export default function VerifyCertificate() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (certificateNumber) {
-      fetchCertificate();
-    }
-  }, [certificateNumber]);
-
-  const fetchCertificate = async () => {
+  const fetchCertificate = useCallback(async () => {
     try {
       const response = await fetch(`/api/verify/${certificateNumber}`);
       const data = await response.json();
@@ -55,7 +49,13 @@ export default function VerifyCertificate() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [certificateNumber]);
+
+  useEffect(() => {
+    if (certificateNumber) {
+      fetchCertificate();
+    }
+  }, [certificateNumber, fetchCertificate]);
 
   if (loading) {
     return (
